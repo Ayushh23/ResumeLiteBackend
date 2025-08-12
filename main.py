@@ -362,4 +362,4 @@ async def debug_lite_prompts():
 
 # ================ INIT ============================
 initialize_prompts()
-
+initialize_lite_prompts()
