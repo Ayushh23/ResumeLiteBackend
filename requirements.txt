@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pymongo
+bcrypt
+pydantic
+PyMuPDF
+google-generativeai
+python-multipart
