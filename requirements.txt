@@ -6,3 +6,5 @@ pydantic
 PyMuPDF
 google-generativeai
 python-multipart
+python-dotenv
+
