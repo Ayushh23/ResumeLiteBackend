@@ -4,6 +4,7 @@ import bcrypt
 from fastapi import Form
 import fitz  # PyMuPDF
 import os
+from dotenv import load_dotenv
 import time
 from fastapi import FastAPI, Form, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -12,25 +13,24 @@ from pymongo import MongoClient
 import google.generativeai as genai
 
 # ================== CONFIG ======================
-MONGO_URI = "mongodb+srv://skillzage1:0vwfCt2zjV1fq0h1@cluster0.gcbclzb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-DB_NAME = "resume_analyzer"
-COLLECTION_NAME = "prompts"
-LITE_PROMPTS_COLLECTION = "lite_prompts"
+load_dotenv()
 
+MONGO_URI = os.getenv("MONGO_URI")
+DB_NAME = os.getenv("DB_NAME")
+COLLECTION_NAME = os.getenv("COLLECTION_NAME")
+LITE_PROMPTS_COLLECTION = os.getenv("LITE_PROMPTS_COLLECTION")
+ADMIN_TOKEN = os.getenv("ADMIN_TOKEN")
+GENAI_API_KEY = os.getenv("GENAI_API_KEY")
 
 client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
 prompt_collection = db[COLLECTION_NAME]
-logs_collection = db["resume_logs"]  # Store logs
+logs_collection = db["resume_logs"]  
 users_collection = db["users"]
 lite_prompts_collection = db[LITE_PROMPTS_COLLECTION]
-# ================== CONFIG END ==================
 
-
-ADMIN_TOKEN = "drdoom"
-
-genai.configure(api_key="AIzaSyCcoQ40u_iM1BIvp26iLqVTWdHp3Ky0TAw")
-
+# GenAI setup
+genai.configure(api_key=GENAI_API_KEY)
 app = FastAPI()
 
 # Enable CORS
@@ -362,4 +362,4 @@ async def debug_lite_prompts():
 
 # ================ INIT ============================
 initialize_prompts()
-initialize_lite_prompts()
+
